@@ -228,3 +228,41 @@ func (h *Handler) GetUserAgentStats(w http.ResponseWriter, r *http.Request) {
 		"user_agent_stats": stats,
 	})
 }
+
+// GET /popular - получение популярных ссылок
+func (h *Handler) GetPopularUrls(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		writeError(w, http.StatusMethodNotAllowed, "Method not allowed")
+		return
+	}
+
+	limit := 10 // По умолчанию топ-10
+	urls, err := h.urlUsecases.GetPopularUrls(r.Context(), limit)
+	if err != nil {
+		log.Printf("Error getting popular URLs: %v", err)
+		writeError(w, http.StatusInternalServerError, "Internal server error")
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"popular_urls": urls,
+		"count":        len(urls),
+	})
+}
+
+// GET /cache/stats - статистика кэша
+func (h *Handler) GetCacheStats(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		writeError(w, http.StatusMethodNotAllowed, "Method not allowed")
+		return
+	}
+
+	stats, err := h.urlUsecases.GetCacheStats(r.Context())
+	if err != nil {
+		log.Printf("Error getting cache stats: %v", err)
+		writeError(w, http.StatusInternalServerError, "Internal server error")
+		return
+	}
+
+	writeJSON(w, http.StatusOK, stats)
+}

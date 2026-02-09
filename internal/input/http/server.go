@@ -15,6 +15,8 @@ func NewServer(urlUsecases port.UrlUsecases, analyticsUsecases port.AnalyticsUse
 	
 	// API routes
 	mux.HandleFunc("/shorten", handler.ShortenUrl)
+	mux.HandleFunc("/popular", handler.GetPopularUrls)
+	mux.HandleFunc("/cache/stats", handler.GetCacheStats)
 	mux.HandleFunc("/analytics/", func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasSuffix(r.URL.Path, "/user-agents") {
 			handler.GetUserAgentStats(w, r)

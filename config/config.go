@@ -10,6 +10,9 @@ type Config struct {
 	HTTPPort  string
 	MasterDSN string
 	SlaveDSNs []string
+	RedisAddr string
+	RedisPassword string
+	RedisDB   int
 }
 
 const DefaultHTTPPort = ":8080"
@@ -36,5 +39,14 @@ func NewConfig() (*Config, error) {
 	if masterDSN != "" {
 		cfg.MasterDSN = masterDSN
 	}
+
+	// Redis configuration
+	cfg.RedisAddr = os.Getenv("REDIS_ADDR")
+	if cfg.RedisAddr == "" {
+		cfg.RedisAddr = "localhost:6379"
+	}
+	cfg.RedisPassword = os.Getenv("REDIS_PASSWORD")
+	cfg.RedisDB = 0 // default DB
+
 	return &cfg, nil
 }

@@ -10,6 +10,8 @@ type UrlUsecases interface {
 	CreateShortUrl(ctx context.Context, fullUrl string, customShort string) (*domain.Url, error)
 	GetOriginalUrl(ctx context.Context, shortUrl string) (string, error)
 	RecordClick(ctx context.Context, shortUrl string, ipAddress string, userAgent string) error
+	GetPopularUrls(ctx context.Context, limit int) ([]domain.Url, error)
+	GetCacheStats(ctx context.Context) (map[string]interface{}, error)
 }
 
 type AnalyticsUsecases interface {
