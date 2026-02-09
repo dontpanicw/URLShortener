@@ -184,13 +184,3 @@ curl "http://localhost:8080/analytics/gh?start_date=2026-01-01&end_date=2026-02-
 2. Реализуйте use case в `internal/usecases/`
 3. Добавьте адаптер в `internal/adapter/`
 4. Создайте HTTP handler в `internal/input/http/`
-
-### Полезные документы
-
-- [QUICKSTART.md](QUICKSTART.md) - быстрый старт
-- [ARCHITECTURE.md](ARCHITECTURE.md) - подробное описание архитектуры
-- [API_EXAMPLES.md](API_EXAMPLES.md) - примеры использования API
-
-## Лицензия
-
-MIT
